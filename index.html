@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowers For You</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--p:#a855f7;--bg1:#0b0a1f;--bg2:#1a2a3a}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#000;font-family:'Montserrat',sans-serif}
+
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:10;background:#000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2rem;cursor:pointer;transition:opacity 1s}
+#intro h2{color:#fff;letter-spacing:.3em;text-shadow:0 0 10px var(--p),0 0 25px var(--p);font-size:1.4rem}
+#intro .line{width:60px;height:2px;background:#f43f5e;margin-top:-1.4rem}
+.heart{width:110px;height:100px;position:relative;animation:beat 1.2s infinite;filter:drop-shadow(0 0 18px var(--p))}
+.heart::before,.heart::after{content:"";position:absolute;left:55px;top:0;width:55px;height:88px;
+  background:linear-gradient(#d946ef,#9333ea);border-radius:55px 55px 0 0;transform:rotate(-45deg);transform-origin:0 100%}
+.heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+.heart i{position:absolute;left:18px;top:14px;width:20px;height:12px;border-radius:50%;background:rgba(255,255,255,.55);transform:rotate(-35deg);z-index:2}
+@keyframes beat{50%{transform:scale(1.15)}}
+body.open #intro{opacity:0;pointer-events:none}
+
+/* ---------- scene ---------- */
+#scene{position:fixed;inset:0;background:linear-gradient(var(--bg1),#101840 60%,var(--bg2));overflow:hidden}
+#scene::after{content:"";position:absolute;left:0;right:0;bottom:0;height:35%;
+  background:linear-gradient(#14284d,#0a1530)}
+.moon{position:absolute;top:6vh;right:6vw;width:48px;height:48px;border-radius:50%;background:#fff;
+  box-shadow:0 0 25px 8px rgba(255,255,255,.55)}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 3s infinite}
+@keyframes tw{50%{opacity:.15}}
+h1{position:absolute;top:7vh;width:100%;text-align:center;z-index:3;font:400 clamp(2.6rem,12vw,4.5rem) 'Great Vibes',cursive;
+  color:#c084fc;text-shadow:0 0 12px var(--p),0 0 30px var(--p);opacity:0;transition:opacity 2s 1s}
+body.open h1{opacity:1}
+
+/* ---------- bouquet ---------- */
+.bouquet{position:absolute;left:50%;bottom:6vh;transform:translateX(-50%);z-index:2;
+  width:min(92vw,430px);height:min(66vh,520px)}
+.tulip{position:absolute;bottom:4%;width:22%;transform-origin:50% 100%;transform:rotate(var(--r)) scaleY(0);opacity:0}
+body.open .tulip{animation:grow 2s var(--d) forwards cubic-bezier(.2,.9,.3,1.1)}
+@keyframes grow{to{transform:rotate(var(--r)) scaleY(1);opacity:1}}
+.tulip svg{width:100%;height:auto;display:block;filter:drop-shadow(0 0 8px rgba(168,85,247,.6))}
+.wrap{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:46%;height:20%;z-index:1;
+  background:linear-gradient(#7e22ce,#4c1d95);clip-path:polygon(0 0,100% 0,62% 100%,38% 100%);opacity:.97}
+
+/* ---------- envelope + letter ---------- */
+.env{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);width:34%;min-width:130px;aspect-ratio:3/2;
+  background:#f9a8d4;border-radius:4px;cursor:pointer;z-index:4;opacity:0;transition:opacity 1s 3.2s}
+body.open .env{opacity:1}
+.env::before{content:"";position:absolute;inset:0;background:linear-gradient(#fbcfe8,#f9a8d4);
+  clip-path:polygon(0 0,100% 0,50% 58%);border-radius:4px}
+.env span{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);color:#ec4899;font-size:1.3rem}
+.letter{position:absolute;left:50%;bottom:6%;width:min(82vw,330px);transform:translate(-50%,40%) scale(.8);
+  background:#fff;border-radius:8px;padding:14px;z-index:5;opacity:0;pointer-events:none;
+  transition:all .8s;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.letter .in{border:1.5px dashed #94a3b8;border-radius:4px;padding:12px;color:#334155;font-size:.8rem;line-height:1.6;
+  display:flex;flex-direction:column;gap:8px;min-height:260px}
+.letter b{color:#1e3a8a}
+.letter .pic{font-size:3.4rem;text-align:center;flex:1;display:flex;align-items:center;justify-content:center}
+body.letter-open .letter{opacity:1;transform:translate(-50%,-62%) scale(1);pointer-events:auto}
+</style>
+</head>
+<body>
+
+<div id="intro"><h2>TAP TO OPEN</h2><div class="line"></div><div class="heart"><i></i></div></div>
+
+<div id="scene">
+  <div class="moon"></div>
+  <h1>Flowers For You</h1>
+  <div class="bouquet" id="bouquet"><div class="wrap"></div></div>
+  <div class="env" id="env"><span>♥</span></div>
+  <div class="letter" id="letter">
+    <div class="in">
+      <b id="to">Dear Love</b>
+      <div id="msg1">Today is not a special date, but for me it is a unique day.</div>
+      <div class="pic"><svg viewBox="0 -8 150 136" width="150" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="96" rx="26" ry="26" fill="#e39b72"/>
+  <circle cx="50" cy="46" r="24" fill="#e8a47c"/>
+  <circle cx="33" cy="26" r="9" fill="#e8a47c"/><circle cx="33" cy="26" r="4.5" fill="#f6cdb0"/>
+  <circle cx="67" cy="26" r="9" fill="#e8a47c"/><circle cx="67" cy="26" r="4.5" fill="#f6cdb0"/>
+  <ellipse cx="50" cy="54" rx="10" ry="7.5" fill="#f6d5bc"/>
+  <circle cx="41" cy="44" r="2.8" fill="#3b2a24"/><circle cx="59" cy="44" r="2.8" fill="#3b2a24"/>
+  <ellipse cx="50" cy="51" rx="3.2" ry="2.4" fill="#3b2a24"/>
+  <path d="M46 57 Q50 61 54 57" stroke="#3b2a24" stroke-width="1.5" fill="none"/>
+  <ellipse cx="38" cy="53" rx="4" ry="2.5" fill="#f4a09a" opacity=".7"/>
+  <ellipse cx="102" cy="100" rx="24" ry="24" fill="#fff" stroke="#e5e7eb"/>
+  <circle cx="102" cy="54" r="22" fill="#fff" stroke="#e5e7eb"/>
+  <circle cx="86" cy="36" r="8" fill="#222"/><circle cx="118" cy="36" r="8" fill="#222"/>
+  <ellipse cx="94" cy="54" rx="6" ry="8" transform="rotate(20 94 54)" fill="#222"/>
+  <ellipse cx="110" cy="54" rx="6" ry="8" transform="rotate(-20 110 54)" fill="#222"/>
+  <circle cx="95" cy="53" r="2" fill="#fff"/><circle cx="109" cy="53" r="2" fill="#fff"/>
+  <ellipse cx="102" cy="63" rx="3.5" ry="2.5" fill="#222"/>
+  <path d="M98 67 Q102 71 106 67" stroke="#222" stroke-width="1.5" fill="none"/>
+  <ellipse cx="82" cy="96" rx="22" ry="8" transform="rotate(-18 82 96)" fill="#e8a47c"/>
+  <ellipse cx="124" cy="92" rx="8" ry="16" transform="rotate(20 124 92)" fill="#222"/>
+  <path d="M80 -2c-6-8-15 0-7 7l7 6 7-6c8-7-1-15-7-7z" fill="#f43f5e"/>
+</svg></div>
+      <div id="msg2">I like you just the way you are. Happy month!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== عدّل الرسالة من هنا ===== */
+const TEXT = {
+  to:   "Dear Love",
+  msg1: "Today is not a special date, but for me it is a unique day.",
+  msg2: "I like you just the way you are. Happy month!"
+};
+document.getElementById('to').textContent   = TEXT.to;
+document.getElementById('msg1').textContent = TEXT.msg1;
+document.getElementById('msg2').textContent = TEXT.msg2;
+
+/* نجوم */
+const sc = document.getElementById('scene');
+for (let i = 0; i < 70; i++) {
+  const s = document.createElement('i');
+  s.className = 'star';
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*65}%;animation-delay:${Math.random()*3}s`;
+  sc.appendChild(s);
+}
+
+/* التوليب: SVG واحد بيتكرر */
+const tulipSVG = `
+<svg viewBox="0 0 80 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0abfc"/><stop offset=".5" stop-color="#c026d3"/><stop offset="1" stop-color="#6b21a8"/></linearGradient>
+    <linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a21caf"/><stop offset="1" stop-color="#581c87"/></linearGradient>
+    <linearGradient id="l" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4ade80"/><stop offset="1" stop-color="#166534"/></linearGradient>
+  </defs>
+  <path d="M40 220 C38 170 42 120 40 70" stroke="#22c55e" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M40 212 C8 192 0 140 18 104 C30 138 38 172 40 212Z" fill="url(#l)"/>
+  <path d="M40 200 C72 182 80 136 62 100 C50 132 42 164 40 200Z" fill="url(#l)" opacity=".9"/>
+  <path d="M40 10 C20 2 6 22 11 50 C14 68 32 76 40 72 C33 52 33 30 40 10Z" fill="url(#d)"/>
+  <path d="M40 10 C60 2 74 22 69 50 C66 68 48 76 40 72 C47 52 47 30 40 10Z" fill="url(#d)"/>
+  <path d="M40 2 C28 22 24 52 40 76 C56 52 52 22 40 2Z" fill="url(#g)"/>
+  <path d="M34 20 C30 34 30 48 34 58" stroke="#fff" stroke-opacity=".45" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>`;
+
+const cfg = [ // left%, height%, rotation, delay
+  [0, 70,  -4, 0.2], [0, 60, -24, 0.5], [0, 62,  22, 0.8],
+  [0, 44, -42, 1.1], [0, 46,  40, 1.4], [0, 80, -12, 1.7], [0, 84,  11, 2.0]
+];
+const b = document.getElementById('bouquet');
+cfg.forEach(([l, h, r, d]) => {
+  const t = document.createElement('div');
+  t.className = 'tulip';
+  const w = h*0.4; t.style.cssText = `left:${50 - w/2 + r*0.18}%;width:${w}%;--r:${r}deg;--d:${d}s`;
+  t.innerHTML = tulipSVG.replace(/id="g"/, `id="g${l}"`).replace(/url\(#g\)/, `url(#g${l})`);
+  b.insertBefore(t, b.firstChild);
+});
+
+/* التفاعل */
+document.getElementById('intro').addEventListener('click', () => document.body.classList.add('open'));
+document.getElementById('env').addEventListener('click', () => document.body.classList.toggle('letter-open'));
+document.getElementById('letter').addEventListener('click', () => document.body.classList.remove('letter-open'));
+</script>
+</body>
+</html>
